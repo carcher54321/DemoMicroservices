@@ -38,9 +38,10 @@ class SurgeryClient:
         response = requests.request('POST', url, data=form)
         return response.json()
 
-    def update(self, name, code, severity):
+    def update(self, ident, name, code, severity):
         # post w/name, code, severity in form
         form = {
+            'id': ident,
             'name': name,
             'code': code,
             'severity': severity

@@ -52,10 +52,11 @@ def get_hospital():
 
 @hospital_api_blueprint.route('/update', methods=['POST'])
 def update_hospital():
-    item = Hospital.query.filter_by(code=request.form['code']).first()
+    item = Hospital.query.filter_by(id=request.form['id']).first()
     if item is not None:
         item.name = request.form['name']
         item.zip = request.form['zip']
+        item.code = request.form['code']
         db.session.add(item)
         db.session.commit()
         response = jsonify({'message': 'Updated hospital', 'result': item.to_json()})

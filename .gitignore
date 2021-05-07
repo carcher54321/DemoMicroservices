@@ -15,3 +15,8 @@
 /surgery_service/migrations/script.py.mako
 /.idea/vcs.xml
 /.idea/workspace.xml
+/operation_service/migrations/versions/5b110cd649fc_.py
+/operation_service/migrations/alembic.ini
+/operation_service/migrations/env.py
+/operation_service/migrations/README
+/operation_service/migrations/script.py.mako

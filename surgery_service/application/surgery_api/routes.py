@@ -55,10 +55,11 @@ def get_surgery():
 
 @surgery_api_blueprint.route('/update', methods=['POST'])
 def update_surgery():
-    item = Surgery.query.filter_by(code=request.form['code']).first()
+    item = Surgery.query.filter_by(id=request.form['id']).first()
     if item is not None:
         item.severity = request.form['severity']
         item.name = request.form['name']
+        item.code = request.form['code']
         db.session.add(item)
         db.session.commit()
         response = jsonify({'message': 'Surgery updated', 'result': item.to_json()})

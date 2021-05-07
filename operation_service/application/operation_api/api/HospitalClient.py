@@ -38,9 +38,10 @@ class HospitalClient:
         response = requests.request('GET', url, data=form)
         return response.json()
 
-    def update(self, name, zip_c, code):
+    def update(self, ident, name, zip_c, code):
         # post w/name, zip_c, and code in form
         form = {
+            'id': ident,
             'name': name,
             'zip': zip_c,
             'code': code
