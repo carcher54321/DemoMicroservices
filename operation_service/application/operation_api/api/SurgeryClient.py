@@ -18,7 +18,7 @@ class SurgeryClient:
         return response.json()
 
     def exists(self, code):
-        url = self.base_url + code + '/exists'
+        url = self.base_url + '/' + code + '/exists'
         response = requests.request('GET', url)
         js = response.json()
         exists = js['result']
