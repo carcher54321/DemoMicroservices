@@ -4,7 +4,7 @@ volumes:
   surgerydb_vol:
 
 networks:
-  micro_network:
+  hc_micro:
     external:
       name: hc_micro
 

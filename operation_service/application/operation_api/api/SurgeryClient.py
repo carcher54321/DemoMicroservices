@@ -3,7 +3,7 @@ import requests
 
 
 class SurgeryClient:
-    base_url = 'http://csurgery-client:5002/api/surgery'
+    base_url = 'http://localhost:5002/api/surgery'
 
     def get(self, ident):
         # get by ID in form

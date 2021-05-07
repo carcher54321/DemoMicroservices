@@ -3,7 +3,7 @@ import requests
 
 
 class HospitalClient:
-    base_url = 'http://chospital-service:5001/api/hospital'
+    base_url = 'http://localhost:5001/api/hospital'
 
     def get_all(self):
         url = self.base_url + '/all'
@@ -48,4 +48,4 @@ class HospitalClient:
         }
         url = self.base_url + '/update'
         response = requests.request('POST', url, data=form)
-        return response
+        return response.json()

@@ -4,12 +4,12 @@ volumes:
   hospitaldb_vol:
 
 networks:
-  micro_network:
+  hc_micro:
     external:
       name: hc_micro
 
 services:
-  user-api:
+  hospital-api:
     container_name: chospital-service
     build:
       context: .
