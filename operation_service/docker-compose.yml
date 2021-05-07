@@ -1,0 +1,37 @@
+version: '3.8'
+
+volumes:
+  operationdb_vol:
+
+networks:
+  micro_network:
+    external:
+      name: hc_micro
+
+services:
+  user-api:
+    container_name: coperation-service
+    build:
+      context: .
+    ports:
+    - "5000:5000"
+    depends_on:
+      - operation-db
+    networks:
+      - hc_micro
+    restart: always
+
+  user-db:
+    container_name: coperation_dbase
+    image: mysql:8
+    ports:
+    - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pfm_dc_2020
+      MYSQL_DATABASE: operation
+      MYSQL_USER: cloudacademy
+      MYSQL_PASSWORD: pfm_2020
+    networks:
+      - hc_micro
+    volumes:
+    - operationdb_vol:/var/lib/mysql

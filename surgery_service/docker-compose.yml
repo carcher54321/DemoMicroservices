@@ -1,0 +1,37 @@
+version: '3.8'
+
+volumes:
+  surgerydb_vol:
+
+networks:
+  micro_network:
+    external:
+      name: hc_micro
+
+services:
+  surgery-api:
+    container_name: csurgery-service
+    build:
+      context: .
+    ports:
+    - "5002:5002"
+    depends_on:
+      - surgery-db
+    networks:
+      - hc_micro
+    restart: always
+
+  surgery-db:
+    container_name: csurgery_dbase
+    image: mysql:8
+    ports:
+    - "32000:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: pfm_dc_2020
+      MYSQL_DATABASE: surgery
+      MYSQL_USER: cloudacademy
+      MYSQL_PASSWORD: pfm_2020
+    networks:
+      - hc_micro
+    volumes:
+    - surgerydb_vol:/var/lib/mysql
