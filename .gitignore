@@ -1,0 +1,16 @@
+/surgery_service/migrations/versions/281853d41bbf_.py
+/hospital_service/migrations/versions/aed15ebe6536_.py
+/hospital_service/migrations/alembic.ini
+/surgery_service/migrations/alembic.ini
+/.idea/DemoMicroservices.iml
+/hospital_service/migrations/env.py
+/surgery_service/migrations/env.py
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/inspectionProfiles/Project_Default.xml
+/hospital_service/migrations/README
+/surgery_service/migrations/README
+/hospital_service/migrations/script.py.mako
+/surgery_service/migrations/script.py.mako
+/.idea/vcs.xml

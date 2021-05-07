@@ -3,4 +3,4 @@ import requests
 
 
 class HospitalClient:
-    base_url = 'http://chospital-service:'
+    base_url = 'http://chospital-service:5001'
