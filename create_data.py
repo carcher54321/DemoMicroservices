@@ -26,7 +26,7 @@ def create_hospital(hospital, hospital_id):
 def create_surgery(surgery, surgery_id):
     return {'type': 'surgery',
             'name': surgery,
-            'severity_level': random.choice(range(1, 10)),
+            'severity': random.choice(range(1, 10)),
             'code': str(surgery_id)}
 
 
@@ -44,11 +44,11 @@ class CreateData:
         rand_date = datetime.date(year, month, day)
         surgeon_name = random.choice(self.first_names_list) + ' ' + random.choice(self.last_names_list)
         return {'type': 'operation',
-                'hospital_code': str(hospital_id),
-                'surgery_code': str(surgery_id),
+                'hospital': str(hospital_id),
+                'surgery': str(surgery_id),
                 'price': random.choice(range(500, 10000)),
                 'date': rand_date.isoformat(),
-                'surgeon_name': surgeon_name.title()}
+                'surgeon': surgeon_name.title()}
 
     def main(self):
         lis = []
