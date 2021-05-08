@@ -3,7 +3,7 @@ import requests
 
 
 class HospitalClient:
-    base_url = 'http://localhost:5001/api/hospital'
+    base_url = 'http://hospital-service:5001/api/hospital'
 
     def get_all(self):
         url = self.base_url + '/all'
