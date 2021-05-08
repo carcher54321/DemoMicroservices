@@ -1,8 +1,12 @@
 import uuid
 import random
 import datetime
-import string
 import json
+
+
+def load_txt(filename):
+    with open(filename, encoding='utf-8') as f:
+        return f.read().split('\n')
 
 
 def apply_uuid(l):
@@ -13,23 +17,17 @@ def apply_uuid(l):
 
 
 def create_hospital(hospital, hospital_id):
-    d = {
-        'type': 'hospital',
-        'name': hospital,
-        'zip': str(random.choice(range(501, 99951))),
-        'code': str(hospital_id)
-    }
-    return d
+    return {'type': 'hospital',
+            'name': hospital,
+            'zip': random.choice(range(501, 99951)),
+            'code': str(hospital_id)}
 
 
 def create_surgery(surgery, surgery_id):
-    d = {
-        'type': 'surgery',
-        'name': surgery,
-        'severity': str(random.choice(range(1, 10))),
-        'code': str(surgery_id)
-    }
-    return d
+    return {'type': 'surgery',
+            'name': surgery,
+            'severity_level': random.choice(range(1, 10)),
+            'code': str(surgery_id)}
 
 
 class CreateData:
@@ -45,15 +43,12 @@ class CreateData:
         year = random.randint(2000, 2021)
         rand_date = datetime.date(year, month, day)
         surgeon_name = random.choice(self.first_names_list) + ' ' + random.choice(self.last_names_list)
-        d = {
-            'type': 'operation',
-            'hospital': str(hospital_id),
-            'surgery': str(surgery_id),
-            'price': str(random.choice(range(500, 10000))),
-            'date': rand_date,
-            'surgeon': surgeon_name.title()
-        }
-        return d
+        return {'type': 'operation',
+                'hospital_code': str(hospital_id),
+                'surgery_code': str(surgery_id),
+                'price': random.choice(range(500, 10000)),
+                'date': rand_date.isoformat(),
+                'surgeon_name': surgeon_name.title()}
 
     def main(self):
         lis = []
@@ -71,27 +66,20 @@ class CreateData:
 
 
 if __name__ == "__main__":
-    with open('data/first_names.all.txt', encoding='utf-8') as f:
-        first_names = f.read().split('\n')
-
-    with open('data/last_names.all.txt', encoding='utf-8') as f:
-        last_names = f.read().split('\n')
-
-    with open('data/hospitals.txt', encoding='utf-8') as f:
-        data = f.read()
-        hospitals = []
-        for i in data.split('\n'):
-            hospitals.append(i)
-    hospitals = apply_uuid(hospitals)
-
-    with open('data/surgeries.txt', encoding='utf-8') as f:
-        data = f.read()
-        surgeries = []
-        for i in data.split('\n'):
-            surgeries.append(i)
-    surgeries = apply_uuid(surgeries)
+    first_names = load_txt('data/first_names.all.txt')
+    last_names = load_txt('data/last_names.all.txt')
+    hospitals = apply_uuid(load_txt('data/hospitals.txt'))
+    surgeries = apply_uuid(load_txt('data/surgeries.txt'))
 
     cd = CreateData(hospitals, surgeries, first_names, last_names)
     out = cd.main()
-    with open('data/medical_data.json', 'w', encoding='utf8') as file:
-        json.dump(out, file)
+
+    try:
+        # tries to create file, throws error if it already exists
+        json_file = open('data/medical_data.json', 'x', encoding='utf-8')
+        json.dump(out, json_file, indent=4)
+        json_file.close()
+    except FileExistsError:
+        json_file = open('data/medical_data.json', 'w', encoding='utf-8')
+        json.dump(out, json_file, indent=4)
+        json_file.close()
