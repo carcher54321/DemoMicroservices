@@ -21,16 +21,33 @@ def create(surgery, hospital, price, date, surgeon):
     return operation
 
 
+def batch_create(lis):
+    num = 0
+    for obj in lis:
+        operation = Operation()
+        operation.surgery = obj['surgery']
+        operation.hospital = obj['hospital']
+        operation.price = obj['price']
+        operation.date = obj['date']
+        operation.surgeon = obj['surgeon']
+        db.session.add(operation)
+        num += 1
+    db.session.commit()
+    return 'Created Operation', num
+
+
 def process_object(obj):
     try:
         tp = obj['type']
     except KeyError:
         return 'No type key', obj
     if tp == 'hospital':
+        # get the data from the object
         try:
             code, name, zip_c = obj['code'], obj['name'], obj['zip']
         except KeyError:
             return 'Missing Key', obj
+        # check if an object with a matching code exists, if so get its id
         exists, ident = hospital_client.exists(code)
         if exists:
             js = hospital_client.update(ident, name, zip_c, code)
@@ -43,7 +60,6 @@ def process_object(obj):
         except KeyError:
             return 'Missing Key', obj
         exists, ident = surgery_client.exists(code)
-        # try except to get data from obj?
         if exists:
             js = surgery_client.update(ident, name, code, severity)
         else:
@@ -91,8 +107,13 @@ def process():
         msg, res = process_object(js)
         return jsonify({'message': msg, 'result': res})
     else:
+        operations = [obj for obj in js if obj['type'] == 'operation']
+        others = [obj for obj in js if obj['type'] != 'operation']
         rets = {}
-        for obj in js:
+        # batch create operations because there are many more of them
+        msg, res = batch_create(operations)
+        rets[msg] = res
+        for obj in others:
             msg, res = process_object(obj)
             if msg in rets:
                 rets[msg] += 1
@@ -110,3 +131,10 @@ def get_operation():
     else:
         response = make_response(jsonify({'message': 'Could not find operation'}), 404)
     return response
+
+
+@operation_api_blueprint.route('/batch-create', methods=['POST'])
+def post_batch_create():
+    lis = request.get_json()
+    message, num = batch_create(lis)
+    return jsonify({'message': f'Created {num} Operations'})

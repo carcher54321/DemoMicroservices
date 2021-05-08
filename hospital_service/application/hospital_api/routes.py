@@ -63,3 +63,18 @@ def update_hospital():
     else:
         response = make_response(jsonify({'message': 'No hospital to update'}), 404)
     return response
+
+
+@hospital_api_blueprint.route('/batch-create', methods=['POST'])
+def batch_create():
+    items = request.get_json()
+    num = 0
+    for obj in items:
+        hospital = Hospital()
+        hospital.name = obj['name']
+        hospital.zip = obj['zip']
+        hospital.code = obj['code']
+        db.session.add(hospital)
+        num += 1
+    db.session.commit()
+    return jsonify({'message': f'Created {num} Hospitals'})

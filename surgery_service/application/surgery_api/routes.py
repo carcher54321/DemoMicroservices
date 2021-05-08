@@ -66,3 +66,18 @@ def update_surgery():
     else:
         response = make_response(jsonify({'message': 'No surgery to update'}))
     return response
+
+
+@surgery_api_blueprint.route('/batch-create', methods=['POST'])
+def batch_create():
+    items = request.get_json()
+    num = 0
+    for obj in items:
+        surgery = Surgery()
+        surgery.name = obj['name']
+        surgery.code = obj['code']
+        surgery.severity = obj['severity']
+        db.session.add(surgery)
+        num += 1
+    db.session.commit()
+    return jsonify({'message': f'Created {num} Surgeries'})

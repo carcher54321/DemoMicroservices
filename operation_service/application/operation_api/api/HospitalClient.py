@@ -49,3 +49,8 @@ class HospitalClient:
         url = self.base_url + '/update'
         response = requests.request('POST', url, data=form)
         return response.json()
+
+    def batch_create(self, lis):
+        url = self.base_url + '/batch-create'
+        response = requests.request('POST', url, json=lis)
+        return response.json()
