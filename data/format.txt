@@ -1,0 +1,48 @@
+Hospitals
+{
+    id: int pk
+    name: str
+    zip: str or int?
+    hosp_code: str
+}
+Surgeries
+{
+    id: int PK
+    name: str
+    procedure_code: str
+    severity_level: 1-10
+}
+Individual Operations
+{
+    id: int PK
+    hospital: int FK
+    surgery: int FK
+    price: num
+    date: datetime
+    surgeon: str
+}
+
+INCOMING DATA (json)
+{
+    type: (hospital, surgery, operation)
+}
+(hospital)
+{
+    name
+    zip
+    code
+}
+(surgery)
+{
+    name
+    code
+    severity
+}
+(operation)
+{
+    hospital
+    surgery
+    price
+    date
+    surgeon
+}
