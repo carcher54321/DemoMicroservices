@@ -4,12 +4,12 @@ volumes:
   operationdb_vol:
 
 networks:
-  micro_network:
+  hc_micro:
     external:
       name: hc_micro
 
 services:
-  user-api:
+  operation-api:
     container_name: coperation-service
     build:
       context: .
@@ -21,7 +21,7 @@ services:
       - hc_micro
     restart: always
 
-  user-db:
+  operation-db:
     container_name: coperation_dbase
     image: mysql:8
     ports:

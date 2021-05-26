@@ -14,3 +14,12 @@
 /hospital_service/migrations/script.py.mako
 /surgery_service/migrations/script.py.mako
 /.idea/vcs.xml
+/.idea/workspace.xml
+/operation_service/migrations/versions/5b110cd649fc_.py
+/operation_service/migrations/alembic.ini
+/operation_service/migrations/env.py
+/operation_service/migrations/README
+/operation_service/migrations/script.py.mako
+/hospital_service/migrations/versions/2e1bff79db34_.py
+/surgery_service/migrations/versions/0334210a0ea9_.py
+/operation_service/migrations/versions/c2f8510ec118_.py
